@@ -1,0 +1,24 @@
+#!/bin/bash 
+#
+# Utility to find a newly conected device through nmap port scan 
+#
+# Michael Gruner <michael.gruner@ridgerun.com>
+#
+echo ""
+echo " == Find IP util == "
+echo ""
+echo "Unplug the device and press enter..."
+read
+echo -n "Scanning ports..."
+nmap -sP 10.251.101.* > /tmp/a.ips
+echo "done!"
+echo ""
+echo "Plug the device and press enter..."
+read
+echo -n "Rescanning ports..."
+nmap -sP 10.251.101.* > /tmp/b.ips
+echo "done!"
+echo ""
+echo "The newly connected devices are:"
+diff /tmp/a.ips /tmp/b.ips | grep "> Nmap scan report"
+echo ""

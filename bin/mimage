@@ -1,0 +1,38 @@
+#!/bin/bash
+IMAGE_FILE=$1
+MOUNT_DIR=/tmp/image
+if [ $# -eq 0 ]
+then
+    sudo umount $MOUNT_DIR
+    exit 0
+fi
+echo "Inspecting image file ${IMAGE_FILE}"
+IMG_INFO=`fdisk -u -l ${IMAGE_FILE}`
+echo "$IMG_INFO"
+NUM=0
+echo "Available partitions to mount:"
+while read -r line
+do
+    if [ $NUM == 0  ]
+    then
+    echo "    $line"
+    else
+    echo "$NUM -- $line"
+    fi
+    NUM=$(( $NUM + 1 ))
+done < <(echo "$IMG_INFO" | grep Device -A5)
+read -p "Select the partition to mount: " partition
+NUM=0
+while read -r line
+do
+    if [ $NUM == $partition ]
+    then
+    line=`echo "$line" | sed 's%*%%g'`
+    START=`echo $line | cut -d' ' -f2`
+    fi
+    NUM=$(( $NUM + 1 ))
+done < <(echo "$IMG_INFO" | grep Device -A10)
+mkdir -p $MOUNT_DIR
+START=$(( $START * 512 ))
+sudo mount -o loop,offset=$START $IMAGE_FILE $MOUNT_DIR
+nautilus $MOUNT_DIR
