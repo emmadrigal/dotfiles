@@ -14,7 +14,9 @@
    [default default default italic underline success warning error])
  '(custom-enabled-themes (quote (tango-dark)))
  '(inhibit-startup-screen t)
- '(package-selected-packages (quote (flycheck-ini-pyinilint flycheck-irony flycheck))))
+ '(package-selected-packages
+   (quote
+    (yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,13 +27,47 @@
 (delete-selection-mode 1)
 
  ; Linters
-(require 'package)
-
-(add-to-list 'package-archives
-             '("MELPA Stable" . "https://stable.melpa.org/packages/") t)
-(package-initialize)
+;; load emacs 24's package system. Add MELPA repository.
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   ;; '("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
+   '("melpa" . "http://melpa.milkbox.net/packages/")
+   t))
 
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<down>") 'shrink-window)
 (global-set-key (kbd "S-C-<up>") 'enlarge-window)
+
+
+;; Autocomplete on LaTeX mode
+(require 'package)
+(package-initialize)
+
+;; yasnippet code 'optional', before auto-complete
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; auto-complete setup, sequence is important
+(require 'auto-complete)
+(add-to-list 'ac-modes 'latex-mode) ; beware of using 'LaTeX-mode instead
+(require 'ac-math) ; package should be installed first 
+(defun my-ac-latex-mode () ; add ac-sources for latex
+   (setq ac-sources
+         (append '(ac-source-math-unicode
+           ac-source-math-latex
+           ac-source-latex-commands)
+                 ac-sources)))
+(add-hook 'LaTeX-mode-hook 'my-ac-latex-mode)
+(setq ac-math-unicode-in-math-p t)
+(ac-flyspell-workaround) ; fixes a known bug of delay due to flyspell (if it is there)
+(add-to-list 'ac-modes 'org-mode) ; auto-complete for org-mode (optional)
+(require 'auto-complete-config) ; should be after add-to-list 'ac-modes and hooks
+(ac-config-default)
+(setq ac-auto-start nil)            ; if t starts ac at startup automatically
+(setq ac-auto-show-menu t)
+(ac-set-trigger-key "TAB")
+(ac-set-trigger-key "<tab>")  
+(global-auto-complete-mode t) 
