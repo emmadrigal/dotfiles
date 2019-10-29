@@ -124,14 +124,19 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[0
 #Add ~/bin to PATH
 PATH=$PATH:~/bin
 
-
 #Beautify gitlog
 alias gitlog='git log --graph --decorate --all'
-
 
 #Add Vivado to the Path
 PATH=$PATH:/opt/Xilinx/Vivado/2018.2/bin/
 
+#Add brew to path
+PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
+
+#Add mcfly
+if [ -r $(brew --prefix)/opt/mcfly/mcfly.bash ]; then
+  . $(brew --prefix)/opt/mcfly/mcfly.bash
+fi
 
 #Add go to the Path
 export PATH=$PATH:/usr/local/go/bin
@@ -145,3 +150,4 @@ alias spotify-play="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotif
 alias spotify-pause="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause"
 
 alias spotify-toggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+
