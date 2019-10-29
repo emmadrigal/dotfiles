@@ -1,0 +1,25 @@
+#!/bin/bash 
+#
+# Utility to find a newly conected device through nmap port scan
+# using its mac adress
+#
+# Emmanuel Madrigal <emmanuel.madrigal@ridgerun.com>
+#
+MAC=$1
+BASE_IP=10.251.101.*
+
+if [[ $1 == "--help" ]] || [[ $1 == "-h" ]] || [ -z $MAC ]
+then
+    echo "Usage: $0 [Device Mac Adress]"
+    echo
+    echo "A partial mac adress can be used, if too"
+    echo "few values are used it will return a several ips"
+    echo
+    echo "The start of the mac address will match with all other"
+    echo "devices of the same kind, for example:"
+    echo "    00:04:4b -> Nvidia"
+else
+	sudo nmap -sP $BASE_IP  | awk -v mac="$MAC" '/report for/{ip=$5}$0~toupper(mac){print ip}'
+fi
+
+    
