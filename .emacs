@@ -16,7 +16,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
+    (hideshow-org matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -74,3 +74,11 @@
 
 
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+(require 're-builder)
+(setq reb-re-syntax 'string)
+
+(setq auto-mode-alist
+      (cons
+       '("\\.m$" . octave-mode)
+       auto-mode-alist))
