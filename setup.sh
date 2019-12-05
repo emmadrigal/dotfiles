@@ -3,7 +3,10 @@
 PWD=$(pwd)
 
 # Miscelanneous packages
-sudo apt install cowsay aa bb cmatrix lolcat
+sudo apt install cowsay aa bb cmatrix lolcat python3-pip
+
+# Install python packages
+sudo pip3 install wemake-python-styleguide
 
 #Remove old files
 rm ~/.emacs

@@ -16,7 +16,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (hideshow-org matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
+    (markdown-mode imenus hideshow-org matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,6 +24,7 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; If something is selected and something is written, the selection is deleted
 (delete-selection-mode 1)
 
  ; Linters
@@ -36,6 +37,7 @@
    '("melpa" . "http://melpa.milkbox.net/packages/")
    t))
 
+;; Enlarge and squish windows
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<down>") 'shrink-window)
@@ -72,13 +74,24 @@
 (ac-set-trigger-key "<tab>")  
 (global-auto-complete-mode t) 
 
-
+;; Add ebud mode
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
+;; Change re-builder to match actual re-search command
 (require 're-builder)
 (setq reb-re-syntax 'string)
 
+;; Set octave mode as default for .m files
 (setq auto-mode-alist
       (cons
        '("\\.m$" . octave-mode)
        auto-mode-alist))
+
+;; Code Folding
+(add-hook 'prog-mode-hook #'hs-minor-mode)
+
+;; Display the column number
+(setq column-number-mode t)
+
+;; Python linters
+(setq python-check-command "flake8")
