@@ -73,25 +73,3 @@
 (ac-set-trigger-key "TAB")
 (ac-set-trigger-key "<tab>")  
 (global-auto-complete-mode t) 
-
-;; Add ebud mode
-(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-
-;; Change re-builder to match actual re-search command
-(require 're-builder)
-(setq reb-re-syntax 'string)
-
-;; Set octave mode as default for .m files
-(setq auto-mode-alist
-      (cons
-       '("\\.m$" . octave-mode)
-       auto-mode-alist))
-
-;; Code Folding
-(add-hook 'prog-mode-hook #'hs-minor-mode)
-
-;; Display the column number
-(setq column-number-mode t)
-
-;; Python linters
-(setq python-check-command "flake8")
