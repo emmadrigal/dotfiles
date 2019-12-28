@@ -33,7 +33,7 @@
   (require 'package)
   (add-to-list
    'package-archives
-   ;;'("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
+   ;; '("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
    '("melpa" . "http://melpa.milkbox.net/packages/")
    t))
 

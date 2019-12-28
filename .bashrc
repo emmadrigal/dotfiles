@@ -152,3 +152,10 @@ alias spotify-play="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotif
 alias spotify-pause="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause"
 
 alias spotify-toggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+
+
+alias beep='paplay  /usr/share/sounds/gnome/default/alerts/glass.ogg'
+
+PATH=/usr/local/cuda-10.2/bin:/usr/local/cuda/NsightCompute-2019.1${PATH:+:${PATH}}
+LD_LIBRARY_PATH=/usr/local/cuda/lib64\
+                         ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
