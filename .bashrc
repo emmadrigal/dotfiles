@@ -126,7 +126,7 @@ PATH=$PATH:~/bin
 
 
 #Beautify gitlog
-alias gitlog='git log --graph --decorate --all'
+alias gitlog="git log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h %C(auto)%d%n    %s - %C(white)%an' --all"
 
 
 #Add Vivado to the Path

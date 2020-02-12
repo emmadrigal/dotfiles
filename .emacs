@@ -16,7 +16,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (markdown-mode imenus hideshow-org matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
+    (helm markdown-mode imenus hideshow-org matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -73,3 +73,27 @@
 (ac-set-trigger-key "TAB")
 (ac-set-trigger-key "<tab>")  
 (global-auto-complete-mode t) 
+
+
+(require 'helm)
+
+(setq-default helm-M-x-fuzzy-match t)
+(global-set-key "\C-x\C-m" 'helm-M-x)
+(global-set-key "\C-c\C-m" 'helm-M-x)
+
+(setq column-number-mode t)
+
+;; -*- mode: elisp -*-
+
+;; Disable the splash screen (to enable it agin, replace the t with 0)
+(setq inhibit-splash-screen t)
+
+;; Enable transient mark mode
+(transient-mark-mode 1)
+
+;;;;Org mode configuration
+;; Enable Org mode
+(require 'org)
+;; Make Org mode work with files ending in .org
+;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+;; The above is the default in recent emacsen
