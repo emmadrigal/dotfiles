@@ -16,7 +16,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (helm markdown-mode imenus hideshow-org matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
+    (markdown-mode imenus hideshow-org matlab-mode dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -73,13 +73,6 @@
 (ac-set-trigger-key "TAB")
 (ac-set-trigger-key "<tab>")  
 (global-auto-complete-mode t) 
-
-
-(require 'helm)
-
-(setq-default helm-M-x-fuzzy-match t)
-(global-set-key "\C-x\C-m" 'helm-M-x)
-(global-set-key "\C-c\C-m" 'helm-M-x)
 
 (setq column-number-mode t)
 
