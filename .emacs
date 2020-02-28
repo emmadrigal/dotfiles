@@ -87,6 +87,8 @@
 ;;;;Org mode configuration
 ;; Enable Org mode
 (require 'org)
-;; Make Org mode work with files ending in .org
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; The above is the default in recent emacsen
+
+(setq org-agenda-files (list "~/mynotes/maestria.org"
+                             "~/mynotes/roya.org" 
+                             "~/mynotes/work.org"))
+
