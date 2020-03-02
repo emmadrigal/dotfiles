@@ -98,3 +98,9 @@
 (autoload 'latex-math-preview-insert-symbol "latex-math-preview" nil t)
 (autoload 'latex-math-preview-save-image-file "latex-math-preview" nil t)
 (autoload 'latex-math-preview-beamer-frame "latex-math-preview" nil t)
+
+;; Disable menu bar
+(menu-bar-mode -1)
+
+;; Disable tool bar
+(tool-bar-mode -1)
