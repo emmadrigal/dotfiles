@@ -16,7 +16,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (latex-math-preview latex-extra ac-octave markdown-mode imenus hideshow-org dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
+    (flycheck-pycheckers flymake-cppcheck flymake-python-pyflakes ace-window gh-md latex-math-preview latex-extra ac-octave markdown-mode imenus hideshow-org dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -104,3 +104,28 @@
 
 ;; Disable tool bar
 (tool-bar-mode -1)
+(put 'upcase-region 'disabled nil)
+
+;; Ace  Windows
+(global-set-key (kbd "M-o") 'ace-window)
+
+;; Flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+
+;; Flymake Python
+(setq flymake-python-pyflakes-executable "flake8")
+
+(global-flycheck-mode 1)
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
+
+;; Flymake Irony C,C++
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
