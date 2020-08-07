@@ -9,7 +9,9 @@ case $- in
 esac
 
 # Avoid duplicates
-export HISTCONTROL=ignoredups:erasedups  
+export HISTCONTROL=ignoredups:erasedups
+HISTSIZE=10000
+HISTFILESIZE=100000
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 
@@ -135,10 +137,10 @@ PATH=$PATH:/opt/Xilinx/Vivado/2018.2/bin/
 #Add brew to path
 PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
 
-#Add mcfly
-if [ -r $(brew --prefix)/opt/mcfly/mcfly.bash ]; then
-  . $(brew --prefix)/opt/mcfly/mcfly.bash
-fi
+# #Add mcfly
+# if [ -r $(brew --prefix)/opt/mcfly/mcfly.bash ]; then
+#   . $(brew --prefix)/opt/mcfly/mcfly.bash
+# fi
 
 #Add go to the Path
 export PATH=$PATH:/usr/local/go/bin
@@ -156,6 +158,22 @@ alias spotify-toggle="dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spot
 
 alias beep='paplay  /usr/share/sounds/gnome/default/alerts/glass.ogg'
 
-PATH=/usr/local/cuda-10.2/bin:/usr/local/cuda/NsightCompute-2019.1${PATH:+:${PATH}}
-LD_LIBRARY_PATH=/usr/local/cuda/lib64\
+export PATH=/usr/local/cuda-10.0/bin:/usr/local/cuda-10.0/NsightCompute-2019.1${PATH:+:${PATH}}
+ export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64\
                          ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/emadrigal/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/emadrigal/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/emadrigal/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/emadrigal/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

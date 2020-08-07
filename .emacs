@@ -12,11 +12,14 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (tango-dark)))
+ '(custom-enabled-themes (quote (vs-dark)))
+ '(custom-safe-themes
+   (quote
+    ("4417913061aa6623f89864e32fc1ab2b03a41bfb37320fe98821d6a0af7883be" default)))
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (flycheck-pycheckers flymake-cppcheck flymake-python-pyflakes ace-window gh-md latex-math-preview latex-extra ac-octave markdown-mode imenus hideshow-org dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
+    (vs-dark-theme acme-theme python-docstring meson-mode cuda-mode fira-code-mode flycheck-pycheckers flymake-cppcheck flymake-python-pyflakes ace-window gh-md latex-math-preview latex-extra ac-octave markdown-mode imenus hideshow-org dts-mode nov yasnippet-snippets auto-complete-auctex flycheck-ini-pyinilint flycheck-irony flycheck))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -27,15 +30,9 @@
 ;; If something is selected and something is written, the selection is deleted
 (delete-selection-mode 1)
 
- ; Linters
-;; load emacs 24's package system. Add MELPA repository.
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
-   'package-archives
-   ;; '("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
-   '("melpa" . "http://melpa.milkbox.net/packages/")
-   t))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                        ("marmalade" . "https://marmalade-repo.org/packages/")
+                        ("melpa" . "https://melpa.org/packages/")))
 
 ;; Enlarge and squish windows
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
@@ -109,23 +106,35 @@
 ;; Ace  Windows
 (global-set-key (kbd "M-o") 'ace-window)
 
-;; Flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
 
-
-;; Flymake Python
-(setq flymake-python-pyflakes-executable "flake8")
-
-(global-flycheck-mode 1)
-(with-eval-after-load 'flycheck
-  (add-hook 'flycheck-mode-hook #'flycheck-pycheckers-setup))
-
-;; Flymake Irony C,C++
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
+;; Automatically load irony mode when working with C/C++
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
 (add-hook 'objc-mode-hook 'irony-mode)
+ 
+;; Load Yasnippet after load
+(add-hook 'c++-mode-hook 'yas-minor-mode)
+(add-hook 'c-mode-hook 'yas-minor-mode)
+(add-hook 'objc-mode-hook 'yas-minor-mode)
 
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+ (define-key irony-mode-map [remap completion-at-point]
+   'irony-completion-at-point-async)
+ (define-key irony-mode-map [remap complete-symbol]
+   'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+ 
+;; Auto load company on startup
+(add-hook 'after-init-hook 'global-company-mode)
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+ 
+;; Load flycheck irony on startup
+(add-hook 'after-init-hook 'global-flycheck-mode)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+

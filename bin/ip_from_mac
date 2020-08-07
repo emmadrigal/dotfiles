@@ -19,7 +19,7 @@ then
     echo "devices of the same kind, for example:"
     echo "    00:04:4b -> Nvidia"
 else
-	sudo nmap -sP $BASE_IP  | awk -v mac="$MAC" '/report for/{ip=$5}$0~toupper(mac){print ip}'
+	sudo nmap -sPn $BASE_IP  | awk -v mac="$MAC" '/report for/{ip=$5}$0~toupper(mac){print ip}'
 fi
 
     
